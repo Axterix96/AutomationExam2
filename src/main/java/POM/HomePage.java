@@ -12,9 +12,7 @@ public class HomePage extends BasePage{
 
     By productsList = By.id("primary");
 
-    public HomePage(WebDriver driver, WebDriverWait wait) {
-        super(driver, wait);
-    }
+
     public void addProduct(String productName)
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(productsList));

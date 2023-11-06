@@ -22,7 +22,7 @@ public class BaseDriver {
         //properties class
         Properties prop = new Properties();
 
-        FileInputStream fis = new FileInputStream("src\\test\\java\\TestCases\\GlobalData.properties");
+        FileInputStream fis = new FileInputStream("src\\test\\java\\Tests\\GlobalData.properties");
         prop.load(fis);
 
 

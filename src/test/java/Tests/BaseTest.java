@@ -10,7 +10,7 @@ public class BaseTest {
 
 
     BaseDriver base = new BaseDriver();
-    public BasePage page;
+
 
 
     @Before
@@ -18,8 +18,8 @@ public class BaseTest {
         base.initializeDriver();
         base.driver.manage().window().maximize();
         base.driver.get("https://demos.bellatrix.solutions/");
-        page = new BasePage(base.driver,base.wait);
-
+        BasePage.wait = base.wait;
+        BasePage.driver = base.driver;
 
     }
 
