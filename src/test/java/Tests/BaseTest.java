@@ -26,6 +26,7 @@ public class BaseTest {
     @After
     public void cleanup()
     {
+        base.driver.close();
         base.driver.quit();
     }
 }
