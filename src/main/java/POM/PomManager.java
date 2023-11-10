@@ -8,6 +8,8 @@ public class PomManager extends BasePage{
 
     public CheckoutPage checkoutPage = new CheckoutPage();
 
+    public PromotionsPage promotionsPage = new PromotionsPage();
+
 
 
 }

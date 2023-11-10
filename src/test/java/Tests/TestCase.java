@@ -21,13 +21,13 @@ PomManager pomManager = new PomManager();
 
 }
 @Test
-public void purchaseSpaceRocketDiscountCode()
-{
+public void purchaseSpaceRocketDiscountCode() {
     pomManager.homePage.addProduct("Falcon 9");
     pomManager.homePage.addProduct("Proton Rocket");
-    pomManager.homePage.clickCartBtn();
+    pomManager.homePage.goToPromotions();
+    String coupon = pomManager.promotionsPage.getCouponAndClickCart();
     pomManager.cartPage.increaseProduct("Falcon 9",4);
-    pomManager.cartPage.buyProductsWithoutCoupon();
+    pomManager.cartPage.buyProductsWithCoupon(coupon);
     pomManager.checkoutPage.fillCheckoutData("Nicolas", "Sogbi","mexico","Paseos de Caucel 2", "merida","yucatan","97314","9999019879","xnicolaz96@gmail.com");
 
 }
