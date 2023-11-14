@@ -15,15 +15,16 @@ public class HomePage extends BasePage {
 
     By promotionsLink = By.xpath("//ul[@class='nav-menu']//a[text()='Promotions']");
 
+    By accountLink = By.xpath("//ul[@class='nav-menu']//a[text()='My account']");
 
     private static WebElement prod(String productName) {
         return driver.findElement(By.xpath("//h2[text()='" + productName + "']/../..//a[text()='Add to cart']"));
     }
 //button product_type_simple add_to_cart_button ajax_add_to_cart loading
-    private static By viewCartProd(String productName){
+    protected static By viewCartProd(String productName){
         return By.xpath("//h2[contains(text(),'"+productName+"')]/../..//a[@class='added_to_cart wc-forward']");
     }
-    private static By viewCartLoading(String productName){
+    protected static By viewCartLoading(String productName){
         return By.xpath("//h2[contains(text(),'"+productName+"')]/../..//a[@class='button product_type_simple add_to_cart_button ajax_add_to_cart loading']");
     }
     public void addProduct(String productName)  {
@@ -34,12 +35,16 @@ public class HomePage extends BasePage {
             }
 
     public void clickCartBtn() {
-        wait.until(ExpectedConditions.elementToBeClickable(viewCartBtn));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(viewCartBtn));
         driver.findElement(viewCartBtn).click();
     }
 
 
     public void goToPromotions() {
         driver.findElement(promotionsLink).click();
+    }
+    public void goToAccount()
+    {
+        driver.findElement(accountLink).click();
     }
 }

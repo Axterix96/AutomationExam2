@@ -10,6 +10,8 @@ public class PomManager extends BasePage{
 
     public PromotionsPage promotionsPage = new PromotionsPage();
 
+    public AccountPage accountPage = new AccountPage();
+
 
 
 }
