@@ -1,6 +1,5 @@
 package Tests;
 
-import POM.HomePage;
 import POM.PomManager;
 import org.junit.Test;
 

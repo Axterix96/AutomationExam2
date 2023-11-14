@@ -2,12 +2,10 @@ package POM;
 
 import junit.framework.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.util.List;
 
 public class CartPage extends BasePage {
 
@@ -25,33 +23,31 @@ public class CartPage extends BasePage {
 
     By couponMsg = By.xpath("//div[@class='woocommerce-message']");
 
-    By thPresence = By.xpath("//*[name()='th']");
+    private static WebElement findRocket(String productName)
+    {
+        return driver.findElement(By.xpath("//a[text()='" + productName + "']/../..//input[@class='input-text qty text']"));
+    }
+
     public void increaseProduct(String productName, int numberOfProducts) {
-        WebElement rocketFound = driver.findElement(By.xpath("//a[text()='" + productName + "']/../..//input[@class='input-text qty text']"));
-        rocketFound.clear();
-        rocketFound.sendKeys(String.valueOf(numberOfProducts) + Keys.ENTER);
+        findRocket(productName).clear();
+        findRocket(productName).sendKeys(String.valueOf(numberOfProducts) + Keys.ENTER);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconProducts));
         wait.until(ExpectedConditions.visibilityOfElementLocated(cartMsg));
         String cartMessage = driver.findElement(cartMsg).getText();
-        Assert.assertEquals("Si se agrego el cambio de producto", cartMessage, "Cart updated.");
+        Assert.assertEquals("Cart wasn't updated", cartMessage, "Cart updated.");
     }
 
     public void buyProductsWithoutCoupon() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,350)", "");
         wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
         driver.findElement(checkoutBtn).click();
     }
     public void buyProductsWithCoupon(String couponName) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,350)", "");
-
         driver.findElement(couponInput).sendKeys(couponName);
         driver.findElement(couponBtn).click();
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconProducts));
         wait.until(ExpectedConditions.visibilityOfElementLocated(loadingIconSubtotal));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconSubtotal));
-        Assert.assertEquals("Se ha aplicado el cupon",
+        Assert.assertEquals("Coupon wasn't applied",
                 "Coupon code applied successfully.",driver.findElement(couponMsg).getText());
         wait.until(ExpectedConditions.visibilityOfElementLocated(checkoutBtn));
         wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));

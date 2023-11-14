@@ -1,13 +1,9 @@
 package POM;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.sql.Driver;
-import java.util.List;
 
 public class HomePage extends BasePage {
 
@@ -21,10 +17,10 @@ public class HomePage extends BasePage {
         return driver.findElement(By.xpath("//h2[text()='" + productName + "']/../..//a[text()='Add to cart']"));
     }
 //button product_type_simple add_to_cart_button ajax_add_to_cart loading
-    protected static By viewCartProd(String productName){
+    private static By viewCartProd(String productName){
         return By.xpath("//h2[contains(text(),'"+productName+"')]/../..//a[@class='added_to_cart wc-forward']");
     }
-    protected static By viewCartLoading(String productName){
+    private static By viewCartLoading(String productName){
         return By.xpath("//h2[contains(text(),'"+productName+"')]/../..//a[@class='button product_type_simple add_to_cart_button ajax_add_to_cart loading']");
     }
     public void addProduct(String productName)  {
