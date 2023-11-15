@@ -28,27 +28,41 @@ public class CartPage extends BasePage {
         return driver.findElement(By.xpath("//a[text()='" + productName + "']/../..//input[@class='input-text qty text']"));
     }
 
-    public void increaseProduct(String productName, int numberOfProducts) {
+    public void editProduct(String productName, int numberOfProducts) {
         findRocket(productName).clear();
         findRocket(productName).sendKeys(String.valueOf(numberOfProducts) + Keys.ENTER);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconProducts));
+
+    }
+    public void checkCartUpdated()
+    {
         wait.until(ExpectedConditions.visibilityOfElementLocated(cartMsg));
         String cartMessage = driver.findElement(cartMsg).getText();
         Assert.assertEquals("Cart wasn't updated", cartMessage, "Cart updated.");
     }
 
     public void buyProductsWithoutCoupon() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconSubtotal));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconProducts));
         wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
         driver.findElement(checkoutBtn).click();
     }
     public void buyProductsWithCoupon(String couponName) {
         driver.findElement(couponInput).sendKeys(couponName);
         driver.findElement(couponBtn).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconProducts));
         wait.until(ExpectedConditions.visibilityOfElementLocated(loadingIconSubtotal));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconProducts));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconSubtotal));
+
+    }
+    public void checkCouponWasApplied()
+    {
         Assert.assertEquals("Coupon wasn't applied",
                 "Coupon code applied successfully.",driver.findElement(couponMsg).getText());
+
+    }
+    public void goToCheckoutPage()
+    {
         wait.until(ExpectedConditions.visibilityOfElementLocated(checkoutBtn));
         wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
         driver.findElement(checkoutBtn).click();
