@@ -41,6 +41,7 @@ public class HomePage extends BasePage {
     }
     public void goToAccount()
     {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(accountLink));
         driver.findElement(accountLink).click();
     }
 }

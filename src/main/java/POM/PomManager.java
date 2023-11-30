@@ -12,6 +12,8 @@ public class PomManager extends BasePage{
 
     public AccountPage accountPage = new AccountPage();
 
+    public OrderPage orderPage = new OrderPage();
+
 
 
 }

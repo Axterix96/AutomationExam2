@@ -34,7 +34,8 @@ public class CheckoutPage extends BasePage{
    By emailInput = By.id("billing_email");
 
    By placeOrderBtn = By.id("place_order");
-   By loadingIcon = By.xpath("//div[@class='blockUI blockOverlay']");
+
+    By loadingIcon = By.xpath("//div[@class='blockUI blockOverlay']");
 
    By orderReceived = By.xpath("//h1[text()='Order received']");
 
@@ -42,21 +43,34 @@ public class CheckoutPage extends BasePage{
 
    By orderId = By.xpath("//li[@class='woocommerce-order-overview__order order']//strong");
 
-   By loadingIconOrder = By.xpath("//table//div[@class='blockUI blockOverlay']");
+   By dateCheckout = By.xpath("//li[@class='woocommerce-order-overview__date date']//strong");
 
-    public String fillCheckoutDataWithoutAccountReturningOrderId()  {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(loadingIconOrder));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconOrder));
-        driver.findElement(placeOrderBtn).click();
+   By totalCheckout = By.xpath("//li[@class='woocommerce-order-overview__total total']//bdi");
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(loadingIcon));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIcon));
 
-        Assert.assertEquals("Order wasn't received","Order received",driver.findElement(orderReceived).getText());
+    public String returnOrderId()  {
+
         String orderIdString = driver.findElement(orderId).getText();
         return orderIdString;
     }
-    public void fillCheckoutDataWithoutAccount(String firstname, String lastname, String country, String address, String city, String state, String zip, String phone, String email)  {
+
+    public List<String> returnOrderData()  {
+
+        String dateCheckoutString = driver.findElement(dateCheckout).getText();
+        String orderIdString = driver.findElement(orderId).getText();
+        String totalOrderString = driver.findElement(totalCheckout).getText();
+
+        List<String> listOrders = new ArrayList<>();
+        listOrders.add(orderIdString);
+        listOrders.add(dateCheckoutString);
+        listOrders.add(totalOrderString);
+
+        return listOrders;
+    }
+
+
+    public void fillData(String firstname, String lastname, String country, String address, String city, String state, String zip, String phone, String email)  {
+        wait.until(ExpectedConditions.presenceOfElementLocated(firstNameInput));
         driver.findElement(firstNameInput).sendKeys(firstname);
         driver.findElement(lastNameInput).sendKeys(lastname);
         driver.findElement(countryDropdown).click();
@@ -70,48 +84,47 @@ public class CheckoutPage extends BasePage{
         driver.findElement(postCodeInput).sendKeys(zip);
         driver.findElement(phoneInput).sendKeys(phone);
         driver.findElement(emailInput).sendKeys(email);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIcon));
-        driver.findElement(placeOrderBtn).click();
+    }
 
+    public void clickPlaceOrderBtn()
+    {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(loadingIcon));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIcon));
+        wait.until(ExpectedConditions.elementToBeClickable(placeOrderBtn));
+        driver.findElement(placeOrderBtn).click();
+    }
+
+    public void waitLoadingIcon()
+    {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(loadingIcon));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIcon));
+    }
+
+    public void createAccount()
+    {
+        driver.findElement(creatAccountInput).click();
+    }
+
+    public void validatePurchaseSuccesful()
+    {
         wait.until(ExpectedConditions.visibilityOfElementLocated(loadingIcon));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIcon));
 
         Assert.assertEquals("Order wasn't received","Order received",driver.findElement(orderReceived).getText());
     }
-    public List<String> fillCheckoutDataCreateAccount(String firstname, String lastname, String country, String address, String city, String state, String zip, String phone)  {
-        driver.findElement(firstNameInput).sendKeys(firstname);
-        driver.findElement(lastNameInput).sendKeys(lastname);
-        driver.findElement(countryDropdown).click();
-        driver.findElement(countryDropdownSearch).sendKeys(country);
-        driver.findElement(countryDropdownSearch).sendKeys(Keys.ENTER);
-        driver.findElement(addressInput).sendKeys(address);
-        driver.findElement(stateDropdown).click();
-        driver.findElement(stateDropdownInput).sendKeys(state);
-        driver.findElement(stateDropdownInput).sendKeys(Keys.ENTER);
-        driver.findElement(cityInput).sendKeys(city);
-        driver.findElement(postCodeInput).sendKeys(zip);
-        driver.findElement(phoneInput).sendKeys(phone);
+
+    public String  createRandomEmail()
+    {
         String stringRandom = RandomStringUtils.randomAlphabetic(10);
         String email = stringRandom + "@" + "gmail.com";
-        driver.findElement(emailInput).sendKeys(email);
-        driver.findElement(creatAccountInput).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIcon));
-        driver.findElement(placeOrderBtn).click();
+        return email;
+    }
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(loadingIcon));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIcon));
-
-        Assert.assertEquals("Order wasn't received","Order received",driver.findElement(orderReceived).getText());
-
-
-
+    public String returnFullName(String firstname, String lastname)  {
         String fullName = firstname +" "+ lastname;
-        String orderIdString = driver.findElement(orderId).getText();
 
-        List<String> listaObjetos = new ArrayList<>();
-        listaObjetos.add(fullName);
-        listaObjetos.add(orderIdString);
 
-        return listaObjetos;
+        return fullName;
+
     }
 }

@@ -1,11 +1,11 @@
 package Tests;
 
 import POM.BasePage;
-import org.junit.After;
-import org.junit.Before;
 
 import java.io.IOException;
 
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 public class BaseTest {
 
 
@@ -13,7 +13,7 @@ public class BaseTest {
 
 
 
-    @Before
+    @BeforeClass
     public void Setup() throws IOException {
         base.initializeDriver();
         base.driver.manage().window().maximize();
@@ -23,10 +23,9 @@ public class BaseTest {
 
     }
 
-    @After
+    @AfterClass
     public void cleanup()
     {
         base.driver.close();
-        base.driver.quit();
     }
 }

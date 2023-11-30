@@ -10,10 +10,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class CartPage extends BasePage {
 
 //a[contains(text(),'Falcon 9')]//ancestor::tr//div[@class='quantity']//input
-    By loadingIconProducts = By.xpath("//div[@class='cart_totals calculated_shipping processing']//div[@class='blockUI blockOverlay']");
+    By textCoupon = By.xpath("//th[text()='Coupon: happybirthday']");
 
     By loadingIconSubtotal = By.xpath("//form[@class='woocommerce-cart-form processing']//div[@class='blockUI blockOverlay']");
 
+    By loadingIconCart = By.xpath("//div[@class='cart-collaterals']//div[@class='blockUI blockOverlay']");
     By cartMsg = By.xpath("//div[@class='woocommerce-message']");
     By checkoutBtn = By.xpath("//a[@class='checkout-button button alt wc-forward']");
 
@@ -31,7 +32,7 @@ public class CartPage extends BasePage {
     public void editProduct(String productName, int numberOfProducts) {
         findRocket(productName).clear();
         findRocket(productName).sendKeys(String.valueOf(numberOfProducts) + Keys.ENTER);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconProducts));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconSubtotal));
 
     }
     public void checkCartUpdated()
@@ -42,8 +43,7 @@ public class CartPage extends BasePage {
     }
 
     public void buyProductsWithoutCoupon() {
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconSubtotal));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconProducts));
+
         wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
         driver.findElement(checkoutBtn).click();
     }
@@ -51,7 +51,6 @@ public class CartPage extends BasePage {
         driver.findElement(couponInput).sendKeys(couponName);
         driver.findElement(couponBtn).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(loadingIconSubtotal));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconProducts));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconSubtotal));
 
     }
@@ -63,9 +62,12 @@ public class CartPage extends BasePage {
     }
     public void goToCheckoutPage()
     {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(textCoupon));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingIconCart));
+        WebElement checkoutBtnElement = driver.findElement(checkoutBtn);
         wait.until(ExpectedConditions.visibilityOfElementLocated(checkoutBtn));
         wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
-        driver.findElement(checkoutBtn).click();
+        checkoutBtnElement.click();
     }
 
 }
