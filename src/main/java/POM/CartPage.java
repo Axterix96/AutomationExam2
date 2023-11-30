@@ -42,8 +42,8 @@ public class CartPage extends BasePage {
         Assert.assertEquals("Cart wasn't updated", cartMessage, "Cart updated.");
     }
 
-    public void buyProductsWithoutCoupon() {
-
+    public void buyProductsWithoutCoupon() throws InterruptedException {
+        Thread.sleep(2000);
         wait.until(ExpectedConditions.elementToBeClickable(checkoutBtn));
         driver.findElement(checkoutBtn).click();
     }

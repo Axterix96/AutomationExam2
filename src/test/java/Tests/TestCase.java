@@ -25,8 +25,8 @@ public class TestCase extends BaseTest{
 
  String personalEmail = "xnicolaz96@gmail.com";
 
-@Test
-        public  void purchaseSpaceRocket()  {
+@Test(groups={"userStory1"})
+        public  void purchaseSpaceRocket() throws InterruptedException {
     pomManager.homePage.addProduct("Falcon 9");
     pomManager.homePage.addProduct("Proton Rocket");
     pomManager.homePage.clickCartBtn();
@@ -37,7 +37,7 @@ public class TestCase extends BaseTest{
     pomManager.checkoutPage.clickPlaceOrderBtn();
     pomManager.checkoutPage.validatePurchaseSuccesful();
 }
-@Test
+    @Test(groups={"userStory1"})
 public void purchaseSpaceRocketDiscountCode() {
     pomManager.homePage.addProduct("Falcon 9");
     pomManager.homePage.addProduct("Proton Rocket");
@@ -51,7 +51,7 @@ public void purchaseSpaceRocketDiscountCode() {
     pomManager.checkoutPage.fillData(firstname, lastname,country,address, city,state,zip,phone,personalEmail);
     pomManager.checkoutPage.clickPlaceOrderBtn();
 }
-    @Test
+    @Test(groups={"userStory1"})
     public void addNewItemsBeforePurchase()
     {
         pomManager.homePage.addProduct("Falcon 9");
@@ -61,9 +61,8 @@ public void purchaseSpaceRocketDiscountCode() {
         pomManager.cartPage.editProduct("Falcon 9",4);
         pomManager.cartPage.checkCartUpdated();
     }
-@Test
-public void createAccountAfterFirstPurchase()
-{
+@Test(groups={"userStory2"})
+public void createAccountAfterFirstPurchase() throws InterruptedException {
     pomManager.homePage.addProduct("Falcon 9");
     pomManager.homePage.clickCartBtn();
     pomManager.cartPage.editProduct("Falcon 9",4);
@@ -79,9 +78,8 @@ public void createAccountAfterFirstPurchase()
     pomManager.accountPage.validateAccountAfterFirstPurchase(object);
 
 }
-@Test
-    public void checkListOfOrders()
-{
+@Test(groups={"userStory2"})
+    public void checkListOfOrders() throws InterruptedException {
     pomManager.homePage.addProduct("Falcon 9");
     pomManager.homePage.clickCartBtn();
     pomManager.cartPage.editProduct("Falcon 9",4);
@@ -101,9 +99,8 @@ public void createAccountAfterFirstPurchase()
 
 
 }
-@Test
-    public void checkLastOrderCreated()
-{
+@Test(groups={"userStory2"})
+    public void checkLastOrderCreated() throws InterruptedException {
     pomManager.homePage.addProduct("Falcon 9");
     pomManager.homePage.clickCartBtn();
     pomManager.cartPage.editProduct("Falcon 9",4);

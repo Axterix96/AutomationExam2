@@ -2,8 +2,15 @@
 
 <suite name="Suite" verbose="1" >
     <test name="UserStory1DemosBellatrix" >
+        <groups>
+            <run>
+                <include name="userStory1"/>
+                <include name="userStory2"/>
+            </run>
+        </groups>
         <classes>
-            <class name="Tests.TestCase" />
+            <class name="Tests.TestCase" >
+            </class>
         </classes>
     </test>
 
