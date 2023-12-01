@@ -4,8 +4,8 @@ import POM.BasePage;
 
 import java.io.IOException;
 
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.*;
+
 public class BaseTest {
 
 
@@ -13,7 +13,7 @@ public class BaseTest {
 
 
 
-    @BeforeClass
+    @BeforeMethod
     public void Setup() throws IOException {
         base.initializeDriver();
         base.driver.manage().window().maximize();
@@ -23,9 +23,9 @@ public class BaseTest {
 
     }
 
-    @AfterClass
+    @AfterMethod
     public void cleanup()
     {
-        base.driver.close();
+        base.driver.quit();
     }
 }
